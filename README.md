@@ -1,3 +1,8 @@
+# NOLAN LEBOUCHER
+# Chahine Benlahcen Tlemcani
+# KONE Bakary 
+# BOUSBIA Aymene
+
 # Procédure de lancement du projet
 
 ### 1. Clôner ce projet
@@ -11,11 +16,11 @@ git clone https://github.com/edofo/kafka-tp-weather.git ./my-app
 Créer un compte sur https://www.weatherapi.com/.
 
 Une fois que vous aurez créé votre compte, vous disposerez d'une clé d'API affichée dans votre compte utilisateur.
-Pas de clé ? 
+Pas de clé ?
 Renseigner la clé dans le fichier `setup.sh`
 
 ```bash
-API_KEY = "XXX" 
+API_KEY = "XXX"
 
 ```
 
@@ -63,7 +68,7 @@ docker exec -it kafka-kafdrop-kafka-1 /bin/bash
 apk add --no-cache python3 py3-pip; pip3 install kafka-python
 ```
 
-### 5. [Conteneur] Lancer `velib-get-stations.py`
+### 5. [Conteneur] Lancer `weather-get-paris.py`
 
 ```bash
 python3 opt/kafka/bin/resources/weather-get-paris.py
