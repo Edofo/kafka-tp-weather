@@ -7,6 +7,7 @@ from kafka import KafkaProducer
 API_KEY = "2c43b2f668054774885132414242206" 
 
 url = "https://api.weatherapi.com/v1/current.json?q=Paris&key={}".format(API_KEY)
+
 producer = KafkaProducer(bootstrap_servers="localhost:9092")
 
 while True:

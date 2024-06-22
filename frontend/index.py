@@ -17,21 +17,41 @@ def create_consumer():
     api_version=(0, 10, 1))  
   return consumer
 
-st.title('Weather in Paris')
+st.title('Weather Monitoring Dashboard')
 
 consumer = create_consumer()
 
 placeholder = st.empty()
 
 try:
-  while True:  
-    data = []
-    for i in range(100): 
-      message = next(consumer)
-      data.append(message.value)
-      print("Received weather record", message.value)
-    df = pd.DataFrame(data)
-    placeholder.dataframe(df)  
-    time.sleep(3) 
+    while True:
+        for message in consumer:
+            weather = message.value
+            location = weather['location']
+            current = weather['current']
+            
+            with placeholder.container():
+                st.header(f"Weather in {location['name']}, {location['country']}")
+                st.write(f"**Region:** {location['region']}")
+                st.write(f"**Local Time:** {location['localtime']}")
+                
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    st.metric(label="Temperature (°C)", value=current['temp_c'])
+                    st.metric(label="Condition", value=current['condition']['text'])
+                    st.image("https:" + current['condition']['icon'])
+                    st.metric(label="Humidity (%)", value=current['humidity'])
+                    st.metric(label="Pressure (mb)", value=current['pressure_mb'])
+                    
+                with col2:
+                    st.metric(label="Wind (kph)", value=current['wind_kph'])
+                    st.metric(label="Wind Direction", value=current['wind_dir'])
+                    st.metric(label="Precipitation (mm)", value=current['precip_mm'])
+                    st.metric(label="Visibility (km)", value=current['vis_km'])
+                    st.metric(label="UV Index", value=current['uv'])
+                    
+except KeyboardInterrupt:
+    st.write("Stream stopped.")
 finally:
-  consumer.close() 
+    consumer.close()
